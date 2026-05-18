@@ -1,0 +1,157 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background-image: url("./assets/outer_frame.png");
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+
+    user-select: none;
+    -webkit-app-region: drag;
+}
+
+.app {
+    position: relative;
+    width: 214px;
+    height: 240px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    padding-top: 16px;
+}
+
+button,
+input,
+textarea,
+select {
+    -webkit-app-region: no-drag;
+    cursor: pointer;
+}
+
+.title {
+    width: 162px;
+    height: 35px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 999px;
+    border: 3px solid #657D50;
+    background: #F7FAD1;
+
+    color: #6E9144;
+    text-align: center;
+    font-family: "Pixelify Sans", sans-serif;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 1;
+
+    white-space: nowrap;
+    overflow: hidden;
+
+    margin-top: 5px;
+    position: relative;
+    z-index: 2;
+}
+
+#calendar {
+    width: 168px;
+    height: 150px;
+
+    margin-top: 6px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    background-image: url("./assets/inner_frame.png");
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+
+    padding-top: 14px;
+    position: relative;
+    z-index: 1;
+}
+
+#day {
+    color: #C8DDAF;
+    text-align: center;
+    -webkit-text-stroke: 1px #151615;
+    font-family: "Pixelify Sans", sans-serif;
+    font-size: 95px;
+    font-weight: 700;
+    line-height: 0.9;
+    position: relative;
+    z-index: 2;
+}
+
+#month {
+    color: #C8DDAF;
+    text-align: center;
+    -webkit-text-stroke: 1px #151615;
+    font-family: "Pixelify Sans", sans-serif;
+    font-size: 37px;
+    font-weight: 700;
+    line-height: 1;
+    margin-top: -10px;
+    position: relative;
+    z-index: 2;
+}
+
+/* planta do topo */
+.plant-top {
+    position: absolute;
+    top: -4px;
+    right: 6px;
+    width: 55px;
+    z-index: 4;
+    pointer-events: none;
+    -webkit-app-region: no-drag;
+    
+}
+
+/* plantinhas de baixo */
+.plant {
+    position: absolute;
+    
+    width: 28px;
+    z-index: 3;
+    pointer-events: none;
+    -webkit-app-region: no-drag;
+}
+
+.plant.center {
+    left: 8px;
+    bottom: 7px;
+}
+
+.plant.left {
+    left: 50%;
+    transform: translateX(-50%);
+    width: 34px;
+    bottom: 8px;
+}
+
+.plant.right {
+    right: 8px;
+    bottom: 7px;
+}
