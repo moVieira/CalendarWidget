@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Personalizar calendário</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Pacifico&family=Pixelify+Sans:wght@400;600;700&family=Press+Start+2P&family=Quicksand:wght@400;700&family=Silkscreen:wght@400;700&family=VT323&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; }
+        body { margin: 0; padding: 16px; font: 14px/1.4 "Segoe UI", sans-serif; background: #f6f6f3; color: #222; }
+        h2 { margin: 18px 0 8px; font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: #666; }
+        h2:first-child { margin-top: 0; }
+        label { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: 6px 0; }
+        input[type="text"], select { width: 190px; padding: 5px 8px; border: 1px solid #bbb; border-radius: 6px; font: inherit; }
+        input[type="color"] { width: 44px; height: 28px; padding: 0; border: 1px solid #bbb; border-radius: 6px; background: none; }
+        input[type="range"] { width: 190px; }
+        .themes { display: flex; flex-wrap: wrap; gap: 6px; }
+        .themes button { padding: 6px 12px; border: 1px solid #bbb; border-radius: 999px; background: #fff; font: inherit; cursor: pointer; }
+        .themes button.active { background: #2f6b3a; border-color: #2f6b3a; color: #fff; }
+        .reset { margin-top: 20px; padding: 8px 14px; border: 1px solid #bbb; border-radius: 6px; background: #fff; font: inherit; cursor: pointer; }
+        :focus-visible { outline: 2px solid #2f6b3a; outline-offset: 2px; }
+    </style>
+</head>
+<body>
+    <h2>Estilo</h2>
+    <div class="themes" id="themes"></div>
+    <label>Moldura
+        <select id="frame">
+            <option value="image">Imagem (jardim)</option>
+            <option value="flat">Lisa (usa as cores)</option>
+        </select>
+    </label>
+    <label>Enfeites <select id="decor"></select></label>
+    <label>Conjunto pronto <select id="stickerSet"></select></label>
+    <div id="slots"></div>
+    <label>Opacidade <input type="range" id="opacity" min="30" max="100" step="1"></label>
+
+    <h2>Fonte</h2>
+    <label>Fonte <select id="font"></select></label>
+    <label>Tamanho do número <input type="range" id="numberScale" min="70" max="110" step="1"></label>
+
+    <h2>Texto</h2>
+    <label>Mostrar título <input type="checkbox" id="showTitle"></label>
+    <label>Título <input type="text" id="titleText" maxlength="24"></label>
+    <label>Idioma do mês
+        <select id="language">
+            <option value="en">English</option>
+            <option value="pt">Português</option>
+        </select>
+    </label>
+    <label>Formato do mês
+        <select id="monthFormat">
+            <option value="long">Completo</option>
+            <option value="short">Abreviado</option>
+        </select>
+    </label>
+
+    <h2>Cores</h2>
+    <div id="colors"></div>
+
+    <button class="reset" id="reset">Restaurar padrão</button>
+
+    <script src="settings-shared.js"></script>
+    <script src="settings.js"></script>
+</body>
+</html>

@@ -16,25 +16,91 @@ body {
     justify-content: center;
     align-items: center;
 
-    background-image: url("./assets/outer_frame.png");
-    background-size: 100% 100%;
-    background-repeat: no-repeat;
-    background-position: center;
-
     user-select: none;
     -webkit-app-region: drag;
 }
 
+/* variáveis controladas pelas configurações (script.js) */
+:root {
+    --frame-bg: #9bbf7a;
+    --frame-border: #657D50;
+    --inner-bg: #3f5a35;
+    --title-bg: #F7FAD1;
+    --title-text: #6E9144;
+    --number-color: #C8DDAF;
+    --number-stroke: #151615;
+    --font: "Pixelify Sans", sans-serif;
+    --number-scale: 1;
+}
+
+/* moldura desenhada no .app (o background do body se propagaria para a janela toda e ignoraria o border-radius) */
+.app::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+}
+
+body[data-frame="image"] .app::before {
+    background-image: url("./assets/outer_frame.png");
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+}
+
+body[data-frame="flat"] .app::before {
+    background-color: var(--frame-bg);
+    border: 3px solid var(--frame-border);
+    border-radius: 14px;
+}
+
+body[data-frame="flat"] #calendar {
+    background-image: none;
+    background-color: var(--inner-bg);
+    border-radius: 10px;
+}
+
+body:not([data-decor="plants"]) .plant,
+body:not([data-decor="plants"]) .plant-top {
+    display: none;
+}
+
+#settings-btn {
+    position: absolute;
+    top: 9px;
+    left: 8px;
+    z-index: 5;
+    width: 18px;
+    height: 18px;
+    border: none;
+    border-radius: 50%;
+    background: none;
+    color: var(--title-text);
+    font-size: 14px;
+    line-height: 1;
+    opacity: 0;
+    transition: opacity 0.15s;
+}
+
+.app:hover #settings-btn {
+    opacity: 0.8;
+}
+
+#settings-btn:hover {
+    opacity: 1;
+}
+
 .app {
+    opacity: var(--opacity, 1);
     position: relative;
     width: 214px;
-    height: 240px;
+    height: 228px;
 
     display: flex;
     flex-direction: column;
     align-items: center;
 
-    padding-top: 16px;
+    padding-top: 10px;
 }
 
 button,
@@ -45,8 +111,16 @@ select {
     cursor: pointer;
 }
 
+#title-text {
+    display: inline-block;
+}
+
+.title[hidden] {
+    display: none;
+}
+
 .title {
-    width: 162px;
+    width: 154px;
     height: 35px;
 
     display: flex;
@@ -54,18 +128,19 @@ select {
     justify-content: center;
 
     border-radius: 999px;
-    border: 3px solid #657D50;
-    background: #F7FAD1;
+    border: 3px solid var(--frame-border);
+    background: var(--title-bg);
 
-    color: #6E9144;
+    color: var(--title-text);
     text-align: center;
-    font-family: "Pixelify Sans", sans-serif;
+    font-family: var(--font);
     font-size: 20px;
     font-weight: 400;
     line-height: 1;
 
     white-space: nowrap;
     overflow: hidden;
+    padding: 0 10px;
 
     margin-top: 5px;
     position: relative;
@@ -93,11 +168,11 @@ select {
 }
 
 #day {
-    color: #C8DDAF;
+    color: var(--number-color);
     text-align: center;
-    -webkit-text-stroke: 1px #151615;
-    font-family: "Pixelify Sans", sans-serif;
-    font-size: 95px;
+    -webkit-text-stroke: 1px var(--number-stroke);
+    font-family: var(--font);
+    font-size: calc(95px * var(--number-scale));
     font-weight: 700;
     line-height: 0.9;
     position: relative;
@@ -105,11 +180,11 @@ select {
 }
 
 #month {
-    color: #C8DDAF;
+    color: var(--number-color);
     text-align: center;
-    -webkit-text-stroke: 1px #151615;
-    font-family: "Pixelify Sans", sans-serif;
-    font-size: 37px;
+    -webkit-text-stroke: 1px var(--number-stroke);
+    font-family: var(--font);
+    font-size: calc(37px * var(--number-scale));
     font-weight: 700;
     line-height: 1;
     margin-top: -10px;
@@ -120,7 +195,7 @@ select {
 /* planta do topo */
 .plant-top {
     position: absolute;
-    top: -4px;
+    top: -10px;
     right: 6px;
     width: 55px;
     z-index: 4;
@@ -141,17 +216,49 @@ select {
 
 .plant.center {
     left: 8px;
-    bottom: 7px;
+    bottom: 1px;
 }
 
 .plant.left {
     left: 50%;
     transform: translateX(-50%);
     width: 34px;
-    bottom: 8px;
+    bottom: 2px;
 }
 
 .plant.right {
     right: 8px;
-    bottom: 7px;
+    bottom: 1px;
+}
+
+/* enfeites pixel-art */
+.sticker {
+    position: absolute;
+    z-index: 3;
+    width: 36px;
+    height: auto;
+    image-rendering: pixelated;
+    pointer-events: none;
+    -webkit-app-region: no-drag;
+    animation: bob 2.4s ease-in-out infinite;
+}
+
+.sticker[hidden],
+body[data-decor="plants"] .sticker,
+body[data-decor="none"] .sticker {
+    display: none;
+}
+
+.sticker.tr { top: 4px; right: 8px; animation-delay: -0.6s; }
+.sticker.bl { left: 10px; bottom: 6px; }
+.sticker.bc { left: 50%; margin-left: -18px; bottom: 6px; animation-delay: -1.2s; }
+.sticker.br { right: 10px; bottom: 6px; animation-delay: -1.8s; }
+
+@keyframes bob {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-3px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .sticker { animation: none; }
 }
